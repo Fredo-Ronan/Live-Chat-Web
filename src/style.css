@@ -1,0 +1,358 @@
+*,html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: white;
+    --header-color: rgb(0, 56, 139);
+    --header-text-color: white;
+    --chat-area-color: rgb(64, 124, 255);
+    --chat-box-color: white;
+    --message-color: rgb(0, 15, 100);
+    --message-text-color: white;
+    --time-stamp-color: rgba(173, 173, 173, 0.719);
+    --feedback-color: rgba(0, 0, 0, 0.568);
+    --message-container-color: rgb(124, 144, 255);
+    --message-input-color: rgb(229, 226, 226);
+    --message-input-text-color: black;
+    --submit-color: rgb(0, 209, 0);
+    --submit-text-color: black; 
+    --toggle-color: rgb(0, 56, 139);
+    --audio-background-color: white;
+    --record-back-color: rgb(238, 238, 238);
+    --record-text-color: black;
+
+    transition: 1s;
+}
+
+body.dark {
+    background-color: rgb(18, 22, 46);
+    --header-color: rgb(18, 22, 46);
+    --header-text-color: rgb(121, 216, 253);
+    --chat-area-color: rgb(27, 26, 26);
+    --chat-box-color: rgb(39, 38, 38);
+    --message-container-color: rgb(49, 49, 49);
+    --message-color: rgb(20, 20, 66);
+    --feedback-color: rgba(255, 255, 255, 0.529);
+    --message-input-color: rgb(83, 82, 82);
+    --message-input-text-color: white;
+    --submit-color: rgb(0, 133, 7);
+    --submit-text-color: white;
+    --toggle-color: rgb(0, 46, 107);
+    --audio-background-color: grey;
+    --record-back-color: rgb(75, 75, 75);
+    --record-text-color: white;
+}
+
+.main {
+    overflow-y: auto;
+}
+
+.main::-webkit-scrollbar {
+    display:none;
+}
+
+.header {
+    background-color: var(--header-color);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display:flex;
+    justify-content: center;
+    color:var(--header-text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: 1s;
+}
+
+.chat-area {
+    background-color: var(--chat-area-color);
+    padding-top: 1.2rem;
+    padding-bottom: 2rem;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    transition: 1s;
+}
+
+.fade {
+    animation: fadeIn 1s;
+}
+
+.chat-box {
+    background-color: var(--chat-box-color);
+    margin-left: 5rem;
+    margin-right: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    transition: 1s;
+}
+
+.message {
+    background-color: var(--message-color);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 5px;
+    margin-bottom: 2px;
+    font-size: 15px;
+    color:var(--message-text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-wrap: break-word;
+    border-radius: 12px;
+    transition: 1s;
+    animation: appear 300ms ease-out;
+}
+
+.time-stamp {
+    font-size: 12px;
+    color:var(--time-stamp-color);
+    display:flex;
+    justify-content: flex-end;
+}
+
+.anchor-link-user-send {
+    color:aqua;
+}
+
+.toggle-icon {
+    background-color: var(--toggle-color);
+    color: white;
+    margin-left: 42rem;
+    margin-right: 42rem;
+    margin-bottom: .8rem;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-size: 17px;
+    transition: .5s;
+}
+
+.toggle-icon:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.td {
+    /* border: 1px solid; */
+    /* background-color: black; */
+    padding-left: 10px;
+    font-size: 18px;
+}
+
+tr .td::content {
+    width: 1%;
+    white-space: nowrap;
+}
+
+.emoji {
+    background-color: aqua;
+    max-height: 30rem;
+    max-width: 44rem;
+    overflow-y: auto;
+    margin-top: -15rem;
+    display: none;
+    animation: emoji-show-animate 500ms ease-out;
+}
+
+.voice-note {
+    /* background-color: var(--audio-background-color); */
+
+    width:300px;
+}
+
+.record-btn {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
+    background-color: var(--record-back-color);
+    color: var(--record-text-color);
+    transition: 1s;
+}
+
+.record-progress {
+    animation: recording 0.5s ease-in-out infinite;
+}
+
+.file-upload {
+    display: flex;
+    flex-direction: row;
+}
+
+#feedback {
+    background-color: rgba(245, 245, 220, 0);
+    font-style: italic;
+    color: var(--feedback-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#message-container {
+    background-color: var(--message-container-color);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 5px;
+    margin-bottom: 2px;
+    max-height: 30rem;
+    max-width: 60rem;
+    overflow-y: auto;
+    border-radius: 5px;
+    transition: 1s;
+}
+
+#message-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+#message-input {
+    background-color: var(--message-input-color);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: var(--message-input-text-color);
+    transition: 1s;
+}
+
+#submit{
+    background-color: var(--submit-color);
+    color: var(--submit-text-color);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 5px;
+    border-style:solid;
+    transition: 1s;
+}
+
+.submit-hidden {
+    display: none;
+}
+
+#upload-file {
+    background-color: var(--submit-color);
+    color: var(--submit-text-color);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-left: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 5px;
+    border-style:solid;
+    transition: 1s;
+}
+
+.upload-file-show {
+    display:block;
+}
+
+#send-container {
+    text-align: center;
+}
+
+#custom-uploadbtn {
+    padding: 5px;
+}
+
+#custom-file-name {
+    margin-left: 5px;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.image-preview, .image-send {
+    max-width: 90%;
+    height: auto;
+}
+
+.upload-file-area {
+    display:flex;
+    flex-direction: column;
+    justify-content:space-around;
+    align-items:center;
+}
+
+@media (max-width: 800px) {
+    .chat-box {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .toggle-icon {
+        margin-left: 5rem;
+        margin-right: 5rem;
+        margin-bottom: 2rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    #message-container {
+        max-height: 35rem;
+        max-width: 15rem;
+    }
+
+    .voice-note {
+        /* background-color: var(--audio-background-color); */
+
+        width:190px;
+    }
+}
+
+@media (max-height: 600px) {
+    #message-container {
+        max-height: 20rem;
+        max-width: 15rem;
+    }
+}
+
+@keyframes appear {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes emoji-show-animate {
+    0% {
+        transform: translateY(50%);
+        transform-origin: 50px 50px;
+    }
+
+    100% {
+        transform: translateY(0);
+        transform-origin: 50px 50px;
+    }
+}
+
+@keyframes fadeIn {
+    from {height: 0px;}
+    to {height: 100px;}
+}
+
+@keyframes recording {
+    0% {
+        background-color: var(--record-back-color);
+        color: var(--record-text-color);
+    }
+
+    100% {
+        background-color: red;
+        color: var(--record-text-color);
+    }
+}
