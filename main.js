@@ -91,9 +91,22 @@ io.on('connection', socket => {
 })
 
 
+app.use(function (request, result, next){
+    result.setHeader("Access-Control-Allow-Origin", "*");
+    next();
+})
+
 // route 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "src/index.html"));
+})
+
+app.get('/get-style', (req, res) => {
+    res.sendFile(path.join(__dirname, "src/style.css"));
+})
+
+app.get('/get-script', (req, res) => {
+    res.sendFile(path.join(__dirname, "src/script.js"));
 })
 
 http.listen(port, () => {
