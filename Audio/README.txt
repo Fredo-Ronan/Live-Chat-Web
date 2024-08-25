@@ -1,1 +1,0 @@
-This folder is for saving the Voice Note file in base64 format
