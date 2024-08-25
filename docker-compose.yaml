@@ -1,9 +1,10 @@
 version: "3.9"
 
 services:
-  expressjs:
+  app:
     build: .
-    container_name: LiveChatWeb
+    container_name: live_chat_web
+    image: fredo06/live_chat_web:1.0.0
     ports:
       - 5000:5000
     restart: always
