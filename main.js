@@ -109,6 +109,6 @@ app.get('/get-script', (req, res) => {
     res.sendFile(path.join(__dirname, "src/script.js"));
 })
 
-http.listen(port, () => {
+http.listen(port, "0.0.0.0", () => {
     console.log(`App Listening on port ${port}`)
 })

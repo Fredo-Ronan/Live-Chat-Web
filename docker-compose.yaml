@@ -4,7 +4,7 @@ services:
   app:
     build: .
     container_name: live_chat_web
-    image: fredo06/live_chat_web:1.0.0
+    image: fredo06/live_chat_web:1.0.2
     ports:
       - 5000:5000
     restart: always
