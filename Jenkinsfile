@@ -2,7 +2,7 @@ pipeline {
     agent { label 'nodejs' }
 
     environment {
-        DOCKER_IMAGE = "fredo06/live_chat_web",
+        DOCKER_IMAGE = "fredo06/live_chat_web"
         DOCKER_TAG = "latest"
     }
 
