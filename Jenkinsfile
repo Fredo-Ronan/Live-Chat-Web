@@ -27,8 +27,7 @@ pipeline {
                 script {
                     // for example is deploy to the same server, this can be deploy to another server later
                     sh '''
-                    docker compose down -v || true
-                    docker compose up -d
+                    docker run -d --name live_chat_web -p 5000:5000 --restart always fredo06/live_chat_web:latest
                     '''
                 }
             }
