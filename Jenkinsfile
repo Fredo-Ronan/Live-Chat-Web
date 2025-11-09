@@ -18,7 +18,6 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    docker rmi live_chat_web:latest || true
                     docker build --no-cache -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
                     '''
                 }
@@ -30,8 +29,8 @@ pipeline {
                 script {
                     // for example is deploy to the same server, this can be deploy to another server later
                     sh '''
-                    docker stop live_chat_web || true
-                    docker rm -v live_chat_web || true
+                    docker stop live_chat_web
+                    docker rm -v live_chat_web
                     docker run -d --name live_chat_web -p 5000:5000 --restart always fredo06/live_chat_web:latest
                     '''
                 }
