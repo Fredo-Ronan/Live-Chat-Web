@@ -6,6 +6,8 @@ pipeline {
         DOCKER_TAG = "latest"
         IMAGE_FILE = "live_chat_web"
         CONTAINER_NAME = "live_chat_web"
+        PROD_SERVER = "192.168.1.102"
+        DEPLOY_DIR = "~/deploy"
     }
 
     stages {
@@ -27,16 +29,27 @@ pipeline {
             }
         }
 
+        stage('Transfer Image') {
+            steps {
+                withCredentials([sshUserPrivateKey(credentialsId: 'deploy-key-1', keyFileVariable: 'KEY', usernameVariable: 'USER')]) {
+                    sh'''
+                    echo "Transferring image to production server..."
+                    ssh -o StrictHostKeyChecking=no -i $KEY $USER@${PROD_SERVER} "mkdir -p ${DEPLOY_DIR}"
+                    scp -o StrictHostKeyChecking=no -i $KEY ${IMAGE_FILE}.tar $USER@${PROD_SERVER}:${DEPLOY_DIR}
+                    '''
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
                 script {
                     withCredentials([sshUserPrivateKey(credentialsId: 'deploy-key-1', keyFileVariable: 'KEY', usernameVariable: 'USER')]) {
                         sh '''
-                        scp -i $KEY ${IMAGE_FILE}.tar $USER@192.168.1.102:/tmp/
-                        ssh -i $KEY -o StrictHostKeyChecking=no $USER@192.168.1.102 << 'ENDSSH'
-                        echo "Connected to 192.168.1.102"
+                        ssh -i $KEY -o StrictHostKeyChecking=no $USER@${PROD_SERVER} << 'ENDSSH'
+                        echo "Connected to ${PROD_SERVER}"
                         whoami
-                        docker load -i /tmp/${IMAGE_FILE}.tar
+                        docker load -i ${DEPLOY_DIR}/${IMAGE_FILE}.tar
                         docker stop ${CONTAINER_NAME} || true
                         docker rm -v ${CONTAINER_NAME} || true
                         docker run -d --name ${CONTAINER_NAME} -p 5000:5000 --restart unless-stopped --network server_network ${DOCKER_IMAGE}:${DOCKER_TAG}
