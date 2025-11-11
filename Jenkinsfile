@@ -22,7 +22,9 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    docker build --no-cache -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
+                    echo "Building multi-platform Docker Image..."
+                    docker buildx create --use || true
+                    docker buildx build --platform linux/amd64,linux/arm64 --no-cache -t ${DOCKER_IMAGE}:${DOCKER_TAG} --output type=docker .
                     docker save ${DOCKER_IMAGE}:${DOCKER_TAG} -o ${IMAGE_FILE}.tar
                     '''
                 }
