@@ -46,13 +46,13 @@ pipeline {
                 script {
                     withCredentials([sshUserPrivateKey(credentialsId: 'deploy-key-1', keyFileVariable: 'KEY', usernameVariable: 'USER')]) {
                         sh '''
-                        ssh -i $KEY -o StrictHostKeyChecking=no $USER@${PROD_SERVER} << 'ENDSSH'
-                        echo "Connected to ${PROD_SERVER}"
+                        ssh -i $KEY -o StrictHostKeyChecking=no $USER@${PROD_SERVER} << 'EOF'
+                        echo "Deploying on production server..."
                         whoami
-                        docker load -i ${DEPLOY_DIR}/${IMAGE_FILE}.tar
-                        docker stop ${CONTAINER_NAME} || true
-                        docker rm -v ${CONTAINER_NAME} || true
-                        docker run -d --name ${CONTAINER_NAME} -p 5000:5000 --restart unless-stopped --network server_network ${DOCKER_IMAGE}:${DOCKER_TAG}
+                        docker load -i ~/deploy/live_chat_web.tar
+                        docker stop live_chat_web || true
+                        docker rm -v live_chat_web || true
+                        docker run -d --name live_chat_web -p 5000:5000 --restart unless-stopped --network server_network fredo06/live_chat_web:latest
                         '''
                     }
                 }
