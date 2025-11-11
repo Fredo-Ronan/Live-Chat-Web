@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "fredo06/live_chat_web"
         DOCKER_TAG = "latest"
+        TARGET_PLATFORM = "linux/arm64"
         IMAGE_FILE = "live_chat_web"
         CONTAINER_NAME = "live_chat_web"
         PROD_SERVER = "192.168.1.102"
@@ -24,7 +25,7 @@ pipeline {
                     sh '''
                     echo "Building multi-platform Docker Image..."
                     docker buildx create --use || true
-                    docker buildx build --platform linux/amd64,linux/arm64 --no-cache -t ${DOCKER_IMAGE}:${DOCKER_TAG} --output type=docker .
+                    docker buildx build --platform ${TARGET_PLATFORM} --no-cache -t ${DOCKER_IMAGE}:${DOCKER_TAG} --output type=docker .
                     docker save ${DOCKER_IMAGE}:${DOCKER_TAG} -o ${IMAGE_FILE}.tar
                     '''
                 }
